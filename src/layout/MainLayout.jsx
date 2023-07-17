@@ -1,5 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { Outlet } from 'react-router-dom';
 
 const MainLayout = () => {
     return (
@@ -9,7 +11,17 @@ const MainLayout = () => {
                     <Navbar></Navbar>
                 </div>
             </div>
-            <button className='btn-primary '>hello</button>
+
+            <div className="min-h-[calc(100vh-64px)]">
+                <div className="container mx-auto" >
+                    <Outlet></Outlet>
+                </div>
+                <div className='bg-gray-700'>
+                    <div className='container mx-auto'>
+                        <Footer></Footer>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
