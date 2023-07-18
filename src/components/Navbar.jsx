@@ -9,8 +9,11 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/about">About</NavLink>
         <NavLink to="/contact">Contact</NavLink>
-        <NavLink to="/login">Login</NavLink>
-        <NavLink to="/register">Register</NavLink>
+       { !user && <> <NavLink to="/login">Login</NavLink>
+        <NavLink to="/register">Register</NavLink> </>}
+        {
+            user &&  <NavLink to="/dashboard">Dashboard</NavLink>
+        }
     </>
 
     return (

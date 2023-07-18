@@ -5,7 +5,10 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../Dashboard/Dashboard";
+import MyHouses from "../Dashboard/Owner/MyHouses";
+import AddHouse from "../Dashboard/Owner/AddHouse";
+
 
 
 const router = createBrowserRouter([
@@ -17,10 +20,14 @@ const router = createBrowserRouter([
             {path:'/contact', element: <Contact></Contact>},
             {path:'/login', element: <Login></Login>},
             {path:'/register', element: <Register></Register>},
-            {path:'/dashboard', element: <Dashboard></Dashboard>},
+           
 
         ]
-    }
+    }, 
+    {path:'/dashboard', element: <Dashboard></Dashboard>, children: [
+        {path:'/dashboard/myhouses', element: <MyHouses></MyHouses>,},
+        {path:'/dashboard/addhouse', element: <AddHouse></AddHouse>,},
+    ]},
 ])
 
 

@@ -32,7 +32,7 @@ const Register = () => {
         const password = form.password.value
         const photo = 'https://mrlaboratory.github.io/img/user.png'
         const info = { name, photo, phone, email, password, role: selectedValue }
-        console.log(info);
+      if(password.length >= 6){
         fetch(`${import.meta.env.VITE_SERVER}/register/${email}`, {
             method: "POST",
             headers: {
@@ -59,6 +59,11 @@ const Register = () => {
                 setError(d.message)
                 setLoading(false)
             })
+      }else{
+        setError('password should be at least 6 characters')
+        setLoading(false)
+      }
+        
 
     }
 
@@ -82,7 +87,7 @@ const Register = () => {
                         {error && <h3 className='font-bold text-red-600 my-2'>{error}</h3>}
 
                         <button className='w-full btn-primary btn'>{loading ? <AiOutlineLoading3Quarters className='text-2xl font-bold animate-spin'></AiOutlineLoading3Quarters> : 'Register'}</button> <br /> <br />
-                        <Link className='p-3' to="/login">Login page . </Link>
+                       <p>Do you have an account? <Link className='p-3 text-primary' to="/login">Login page . </Link> </p> 
                     </form>
                 </div>
             </div>

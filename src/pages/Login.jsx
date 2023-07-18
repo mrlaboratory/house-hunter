@@ -67,7 +67,7 @@ const Login = () => {
                         {error && <h3 className='font-bold text-red-600 my-2'>{error}</h3>}
 
                         <button className='w-full btn-primary btn'>{loading ? <AiOutlineLoading3Quarters className='text-2xl font-bold animate-spin'></AiOutlineLoading3Quarters> : 'Login'} </button> <br /> <br />
-                        <p>Don not have an account?  <Link className='p-3' to="/register">Create New Account . </Link> </p>
+                        <p>Don not have an account?  <Link className='p-3 text-primary' to="/register">Create New Account . </Link> </p>
                     </form>
                 </div>
             </div>
