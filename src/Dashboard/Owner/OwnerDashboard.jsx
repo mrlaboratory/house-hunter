@@ -15,7 +15,7 @@ const OwnerDashboard = () => {
             <div>
                 <label htmlFor="drawermr" className="btn btn-primary drawer-button lg:hidden  m-1"> Menu </label>
             </div>
-            <div className='p-5 bg-gray-100 w-full h-full'>
+            <div className='p-5 bg-gray-100 w-full h-full overflow-y-scroll'>
                <Outlet></Outlet>
             </div>
 

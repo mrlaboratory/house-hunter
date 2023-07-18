@@ -5,7 +5,7 @@ import OwnerDashboard from './Owner/OwnerDashboard';
 const Dashboard = () => {
 
     return (
-        <div className='w-full h-full max-w-[100vw] max-h-[100vh] bg-gray-100 overflow-hidden'>
+        <div className='w-full h-full max-w-[100vw] max-h-[100vh] bg-gray-100 '>
             <div className='bg-white'>
                 <div className='container mx-auto'>
                     <Navbar></Navbar>
