@@ -9,7 +9,7 @@ const OwnerDashboard = () => {
 
     
     return (
-        <div className="drawer lg:drawer-open">
+        <div className="drawer lg:drawer-open ">
         <input id="drawermr" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content ">
             <div>
@@ -27,7 +27,7 @@ const OwnerDashboard = () => {
                 <NavLink className='btn flex justify-start rounded-lg shadow-md border bg-white my-1 text-gray-600 ' to='/dashboard/myhouses'> <BsFillHousesFill className='text-xl'></BsFillHousesFill>My Houses </NavLink>
                 
                 <NavLink className='btn flex justify-start rounded-lg shadow-md border bg-white my-1 text-gray-600 ' to='/dashboard/addhouse'> <AiFillHome className='text-xl'></AiFillHome>Add New House</NavLink>
-                {/* <NavLink to='/dashboard/applymodarator' className='btn flex justify-start rounded-lg shadow-md border bg-white my-1 text-gray-600 '> <HiUsers className='text-xl'></HiUsers> Manage Article </NavLink> */}
+                <NavLink to='/dashboard/managehouses' className='btn flex justify-start rounded-lg shadow-md border bg-white my-1 text-gray-600 '> <BsFillHousesFill className='text-xl'></BsFillHousesFill> Manage Houses </NavLink>
 
             </ul>
 

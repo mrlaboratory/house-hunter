@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import OwnerDashboard from './Owner/OwnerDashboard';
+import Spinner from '../components/Spinner';
 
 const Dashboard = () => {
 
@@ -14,6 +15,7 @@ const Dashboard = () => {
             <div>
                 <OwnerDashboard></OwnerDashboard>
             </div>
+
 
         </div>
     );

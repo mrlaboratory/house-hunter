@@ -9,7 +9,8 @@ export const Authcontext = createContext()
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [run, change] = useState(false)
-    const [path,setPath] = useState('/dashboard')
+    const [path, setPath] = useState('/dashboard')
+    const [loading, setLoading] = useState(true)
 
 
     // console.log(`${import.meta.env.VITE_SERVER}`);
@@ -25,29 +26,35 @@ const AuthProvider = ({ children }) => {
         refetch()
     }
 
-    const {data, refetch } = useQuery({
-        queryKey : ['userData'], 
-        queryFn : async() => {
-            const res = await axios(`${import.meta.env.VITE_SERVER}/userData`,{
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('userToken')}`,
-                },
-            })
-            console.log(res);
-            setUser(res.data)
-            return res.data
+    const { data, refetch } = useQuery({
+        queryKey: ['userData'],
+        queryFn: async () => {
+            try {
+                const res = await axios(`${import.meta.env.VITE_SERVER}/userData`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+                    },
+                });
+                setUser(res.data);
+                return res.data;
+            } catch (error) {
+                // Handle error the data cannot be loaded
+                console.error(error);
+                setLoading(false);
+                return null;
+            }
         },
-    })
+    });
 
     const getData = async token => {
-       const res =  await axios(`${import.meta.env.VITE_SERVER}/userData`, {
+        const res = await axios(`${import.meta.env.VITE_SERVER}/userData`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-        }) .then(d => {
+        }).then(d => {
             console.log(d)
         })
-        .catch(e => console.log(e))
+            .catch(e => console.log(e))
     }
 
 
@@ -67,7 +74,7 @@ const AuthProvider = ({ children }) => {
         //     setUser(d)
         //    })
         //    .catch(e => console.log(e))
-           
+
         // }else{
         //     change(true)
         // }
@@ -82,7 +89,8 @@ const AuthProvider = ({ children }) => {
         loginUser,
         logoutUser,
         path,
-        setPath, 
+        setPath,
+        loading,
 
 
 

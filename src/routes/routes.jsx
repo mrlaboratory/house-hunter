@@ -8,6 +8,8 @@ import Register from "../pages/Register";
 import Dashboard from "../Dashboard/Dashboard";
 import MyHouses from "../Dashboard/Owner/MyHouses";
 import AddHouse from "../Dashboard/Owner/AddHouse";
+import ManageHouses from "../Dashboard/Owner/ManageHouses";
+import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -25,8 +27,9 @@ const router = createBrowserRouter([
         ]
     }, 
     {path:'/dashboard', element: <Dashboard></Dashboard>, children: [
-        {path:'/dashboard/myhouses', element: <MyHouses></MyHouses>,},
-        {path:'/dashboard/addhouse', element: <AddHouse></AddHouse>,},
+        {path:'/dashboard/myhouses', element: <PrivateRoute><MyHouses></MyHouses></PrivateRoute> ,},
+        {path:'/dashboard/addhouse', element: <PrivateRoute><AddHouse></AddHouse></PrivateRoute> ,},
+        {path:'/dashboard/managehouses', element: <PrivateRoute><ManageHouses></ManageHouses></PrivateRoute>,},
     ]},
 ])
 
