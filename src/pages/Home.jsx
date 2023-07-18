@@ -1,11 +1,10 @@
 import React from 'react';
+import AllHouses from '../components/AllHouses';
 
 const Home = () => {
     return (
         <div>
-            <h2>this is home page </h2>
-            <button className='btn btn-primary'>test </button>
-            <p>hey</p>
+            <AllHouses></AllHouses>
         </div>
     );
 };

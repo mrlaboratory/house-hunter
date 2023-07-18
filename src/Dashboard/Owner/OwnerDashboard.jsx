@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { AiFillHome } from 'react-icons/Ai';
-import { HiUsers } from 'react-icons/Hi';
 import { BsFillHousesFill } from 'react-icons/Bs';
 import { NavLink, Outlet } from 'react-router-dom';
 

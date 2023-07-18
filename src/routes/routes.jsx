@@ -23,10 +23,9 @@ const router = createBrowserRouter([
             {path:'/login', element: <Login></Login>},
             {path:'/register', element: <Register></Register>},
            
-
         ]
     }, 
-    {path:'/dashboard', element: <Dashboard></Dashboard>, children: [
+    {path:'/dashboard', element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute> , children: [
         {path:'/dashboard/myhouses', element: <PrivateRoute><MyHouses></MyHouses></PrivateRoute> ,},
         {path:'/dashboard/addhouse', element: <PrivateRoute><AddHouse></AddHouse></PrivateRoute> ,},
         {path:'/dashboard/managehouses', element: <PrivateRoute><ManageHouses></ManageHouses></PrivateRoute>,},
