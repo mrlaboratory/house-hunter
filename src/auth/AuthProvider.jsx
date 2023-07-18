@@ -1,11 +1,16 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { createContext, useEffect, useState } from 'react';
+
+import axios from 'axios';
+
 
 export const Authcontext = createContext()
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState({ name: 'Md Mijanur Rahaman', email: 'admin@mrlaboratory.com' })
+    const [user, setUser] = useState(null)
+    const [run, change] = useState(false)
 
 
-    console.log(`${import.meta.env.VITE_SERVER}`);
+    // console.log(`${import.meta.env.VITE_SERVER}`);
     const createUser = () => {
 
     }
@@ -13,17 +18,64 @@ const AuthProvider = ({ children }) => {
 
     }
     const logoutUser = () => {
-        setUser('')
-
+        localStorage.removeItem('userToken')
+        setUser(null)
+        refetch()
     }
 
-    useEffect(()=> {
+    const {data, refetch } = useQuery({
+        queryKey : ['userData'], 
+        queryFn : async() => {
+            const res = await axios(`${import.meta.env.VITE_SERVER}/userData`,{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+                },
+            })
+            console.log(res);
+            setUser(res.data)
+            return res.data
+        },
+    })
 
-    },[])
+    const getData = async token => {
+       const res =  await axios(`${import.meta.env.VITE_SERVER}/userData`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }) .then(d => {
+            console.log(d)
+        })
+        .catch(e => console.log(e))
+    }
 
+
+
+    // get user data 
+    useEffect(() => {
+        // const token = localStorage.getItem('userToken')
+        // if (token) {
+        //     console.log(token);
+        //    fetch(`${import.meta.env.VITE_SERVER}/userData`,{
+        //     headers: {
+        //         Authorization: `Bearer ${token}`,
+        //     }
+        //    })
+        //    .then(res => res.json())
+        //    .then(d => {
+        //     setUser(d)
+        //    })
+        //    .catch(e => console.log(e))
+           
+        // }else{
+        //     change(true)
+        // }
+
+    }, [run])
 
     const info = {
         user,
+        refetch,
+        change,
         createUser,
         loginUser,
         logoutUser,

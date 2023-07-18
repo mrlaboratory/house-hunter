@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Authcontext } from '../auth/AuthProvider';
 
 const Login = () => {
     const [error, setError] = useState('')
+    const {refetch} = useContext(Authcontext)
 
 
     const handleLogin = e => {
@@ -24,7 +26,7 @@ const Login = () => {
             .then(d => {
                if(d?.token){
                 localStorage.setItem('userToken', d.token)
-                console.log(d.token);
+                refetch()
                }
                 if (d?.error) {
                     console.log(d)
