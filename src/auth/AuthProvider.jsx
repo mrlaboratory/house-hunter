@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { createContext, useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 import axios from 'axios';
 
@@ -8,6 +9,7 @@ export const Authcontext = createContext()
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [run, change] = useState(false)
+    const [path,setPath] = useState('/dashboard')
 
 
     // console.log(`${import.meta.env.VITE_SERVER}`);
@@ -79,6 +81,9 @@ const AuthProvider = ({ children }) => {
         createUser,
         loginUser,
         logoutUser,
+        path,
+        setPath, 
+
 
 
     }
@@ -86,6 +91,7 @@ const AuthProvider = ({ children }) => {
     return (
         <Authcontext.Provider value={info}>
             {children}
+            <Toaster />
         </Authcontext.Provider>
     );
 };

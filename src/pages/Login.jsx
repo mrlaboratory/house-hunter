@@ -1,14 +1,26 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Authcontext } from '../auth/AuthProvider';
+import { AiOutlineLoading3Quarters } from 'react-icons/Ai';
+import { toast } from 'react-hot-toast';
+
 
 const Login = () => {
     const [error, setError] = useState('')
-    const {refetch} = useContext(Authcontext)
+    const { refetch, path , user} = useContext(Authcontext)
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
+    useEffect(()=> {
+        if(user) {
+            navigate(path)
+        }
+    },[user])
 
     const handleLogin = e => {
+        setError('')
         e.preventDefault()
+        setLoading(true)
         const form = e.target
         const email = form.email.value
         const password = form.password.value
@@ -24,17 +36,26 @@ const Login = () => {
         })
             .then(res => res.json())
             .then(d => {
-               if(d?.token){
-                localStorage.setItem('userToken', d.token)
-                refetch()
-               }
+                if (d?.token) {
+                    localStorage.setItem('userToken', d.token)
+                    refetch()
+                    toast.success('Login successfully !!')
+
+                }
                 if (d?.error) {
                     console.log(d)
                     setError(d.message)
                 }
+                setLoading(false)
             })
-            .catch(d => setError(d.message))
+            .catch(d => {
+                setError(d.message)
+                setLoading(false)
+            })
     }
+
+
+
     return (
         <div className='p-5 my-10'>
             <h2 className='text-2xl font-bold text-center my-5'>Login Now </h2>
@@ -45,8 +66,8 @@ const Login = () => {
                         <input required type="password" name='password' placeholder="Password " className="input input-bordered w-full mb-2 " /> <br />
                         {error && <h3 className='font-bold text-red-600 my-2'>{error}</h3>}
 
-                        <button className='w-full btn-primary btn'>Login</button> <br /> <br />
-                      <p>Don not have an account?  <Link className='p-3' to="/register">Create New Account . </Link> </p> 
+                        <button className='w-full btn-primary btn'>{loading ? <AiOutlineLoading3Quarters className='text-2xl font-bold animate-spin'></AiOutlineLoading3Quarters> : 'Login'} </button> <br /> <br />
+                        <p>Don not have an account?  <Link className='p-3' to="/register">Create New Account . </Link> </p>
                     </form>
                 </div>
             </div>
