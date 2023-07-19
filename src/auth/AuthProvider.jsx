@@ -35,6 +35,7 @@ const AuthProvider = ({ children }) => {
                         Authorization: `Bearer ${localStorage.getItem('userToken')}`,
                     },
                 });
+                setLoading(false);
                 setUser(res.data);
                 return res.data;
             } catch (error) {

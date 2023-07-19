@@ -1,9 +1,42 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import HouseCard from './HouseCard';
+import { Authcontext } from '../auth/AuthProvider';
+
 
 const AllHouses = () => {
+    
+
+ 
+
+    const { data:totalHouses } = useQuery({
+        queryKey: ['houses'],
+        queryFn: async () => {
+            const res = await axios(`${import.meta.env.VITE_SERVER}/totalhouses`)
+            console.log(res?.data?.totalHouses);
+            return res?.data?.totalHouses;
+
+        }
+    })
+    const [activePage,setActivePage] = useState(0)
+    const limit  = 2
+    const pages = Math.ceil(totalHouses / limit)
+    let totalPages = pages ? [...Array(pages).keys()] : []
+console.log(totalHouses);
+
+const { data:data2, refetch:loadHouse } = useQuery({
+    queryKey: [activePage],
+    queryFn: async () => {
+        const res = await axios(`${import.meta.env.VITE_SERVER}/allhouse?page=${activePage}&limit=${limit}`)
+        setHouses(res.data)
+        return res?.data
+
+    }
+})
+
+
+    const {user} = useContext(Authcontext)
     const [houses, setHouses] = useState(null)
     const [query,setQuery] = useState('')
     const queryRef = useRef('')
@@ -18,6 +51,8 @@ const AllHouses = () => {
     const [bathrooms, setBathrooms] = useState(0);
     const [rent, setRent] = useState(0);
     const [size, setSize] = useState(0);
+
+   
 
     const { data, refetch } = useQuery({
         queryKey: ['userData'],
@@ -148,12 +183,14 @@ const AllHouses = () => {
                 </div>
             </div>
             <div className='w-full bg-white my-2 rounded-lg p-5 shadow-md flex justify-center items-center'>
-                <div className="join">
-                    <button className="join-item btn btn-md">1</button>
-                    <button className="join-item btn btn-md btn-active">2</button>
-                    <button className="join-item btn btn-md">3</button>
-                    <button className="join-item btn btn-md">4</button>
+                
+            <div className="btn-group">
+                    {
+                        totalPages?.map(i => <button onClick={() => setActivePage(i)} key={i} className={`btn border-none text-white bg-[#95b3e0] btn-md ${activePage == i ? 'btn-active text-white' : ''}`}>{i+1}</button>)
+                    }
+
                 </div>
+
             </div>
         </div>
     );
