@@ -10,6 +10,7 @@ import MyHouses from "../Dashboard/Owner/MyHouses";
 import AddHouse from "../Dashboard/Owner/AddHouse";
 import ManageHouses from "../Dashboard/Owner/ManageHouses";
 import PrivateRoute from "./PrivateRoute";
+import MyBookings from "../Dashboard/Renter/MyBookings";
 
 
 
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
         {path:'/dashboard/myhouses', element: <PrivateRoute><MyHouses></MyHouses></PrivateRoute> ,},
         {path:'/dashboard/addhouse', element: <PrivateRoute><AddHouse></AddHouse></PrivateRoute> ,},
         {path:'/dashboard/managehouses', element: <PrivateRoute><ManageHouses></ManageHouses></PrivateRoute>,},
+
+
+
+
+        {path:'/dashboard/mybookings', element: <PrivateRoute> <MyBookings></MyBookings> </PrivateRoute>,},
     ]},
 ])
 
