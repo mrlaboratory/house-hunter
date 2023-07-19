@@ -30,7 +30,7 @@ const HouseCard = ({ name, pictureUrl,email, rent, _id, city, bedrooms, bathroom
                 <img className=' object-cover group-hover:scale-110 duration-500' src={pictureUrl} alt="" />
             </div>
             <div>
-                <h2 className='text-xl'> {name}</h2>
+                <h2 className='text-xl font-bold  text-primary'> {name}</h2>
                 <h3>In - {city}</h3>
                 <h3>(Bedrooms - {bedrooms}) (Bathrooms - {bathrooms}) (RoomSize - {romeSize}ft)</h3>
             </div>

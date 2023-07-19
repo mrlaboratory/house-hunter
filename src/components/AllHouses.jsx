@@ -237,8 +237,8 @@ const AllHouses = () => {
                 <div method="dialog" className="modal-box">
 
                     <form onSubmit={handleBook}>
-                        <input name='name' value={user.name} required type="text" placeholder="Name " className="input input-bordered input-primary w-full my-2 bg-gray-100 border-0 " />
-                        <input name='email' value={user.email} required type="email" placeholder="Email " className="input input-bordered input-primary w-full bg-gray-100 border-0 " />
+                        <input name='name' value={user?.name} required type="text" placeholder="Name " className="input input-bordered input-primary w-full my-2 bg-gray-100 border-0 " />
+                        <input name='email' value={user?.email} required type="email" placeholder="Email " className="input input-bordered input-primary w-full bg-gray-100 border-0 " />
                         <input name='number' required type="text" placeholder="number  " className="input input-bordered input-primary my-2 w-full bg-gray-100 border-0 " />
 
                         <button className='btn btn-primary w-full my-3'>Book Now</button>
