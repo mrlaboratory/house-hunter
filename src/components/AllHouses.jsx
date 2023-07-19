@@ -3,14 +3,14 @@ import axios from 'axios';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import HouseCard from './HouseCard';
 import { Authcontext } from '../auth/AuthProvider';
+import { AiFillCloseCircle } from 'react-icons/Ai';
+import { toast } from 'react-hot-toast';
 
 
 const AllHouses = () => {
-    
-
- 
-
-    const { data:totalHouses } = useQuery({
+    const { user } = useContext(Authcontext)
+    const [activeData, setActiveData] = useState('')
+    const { data: totalHouses } = useQuery({
         queryKey: ['houses'],
         queryFn: async () => {
             const res = await axios(`${import.meta.env.VITE_SERVER}/totalhouses`)
@@ -19,26 +19,26 @@ const AllHouses = () => {
 
         }
     })
-    const [activePage,setActivePage] = useState(0)
-    const limit  = 2
+    const [activePage, setActivePage] = useState(0)
+    const limit = 2
     const pages = Math.ceil(totalHouses / limit)
     let totalPages = pages ? [...Array(pages).keys()] : []
-console.log(totalHouses);
+    console.log(totalHouses);
 
-const { data:data2, refetch:loadHouse } = useQuery({
-    queryKey: [activePage],
-    queryFn: async () => {
-        const res = await axios(`${import.meta.env.VITE_SERVER}/allhouse?page=${activePage}&limit=${limit}`)
-        setHouses(res.data)
-        return res?.data
+    const { data: data2, refetch: loadHouse } = useQuery({
+        queryKey: [activePage],
+        queryFn: async () => {
+            const res = await axios(`${import.meta.env.VITE_SERVER}/allhouse?page=${activePage}&limit=${limit}`)
+            setHouses(res.data)
+            return res?.data
 
-    }
-})
+        }
+    })
 
 
-    const {user} = useContext(Authcontext)
+
     const [houses, setHouses] = useState(null)
-    const [query,setQuery] = useState('')
+    const [query, setQuery] = useState('')
     const queryRef = useRef('')
     const bedroomsRef = useRef('')
     const bathroomsRef = useRef('')
@@ -52,7 +52,7 @@ const { data:data2, refetch:loadHouse } = useQuery({
     const [rent, setRent] = useState(0);
     const [size, setSize] = useState(0);
 
-   
+
 
     const { data, refetch } = useQuery({
         queryKey: ['userData'],
@@ -98,6 +98,44 @@ const { data:data2, refetch:loadHouse } = useQuery({
         refetch()
     };
 
+    const handleClose = () => {
+        window.my_modal_5.close()
+    }
+
+
+    const handleBook = e => {
+        e.preventDefault()
+        const info = {...activeData}
+        info.renterNumber = e.target .number.value 
+        fetch(`${import.meta.env.VITE_SERVER}/bookinghouse`, {
+            method: "POST",
+            headers: {
+                'content-type':'application/json',
+                Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+            },
+            body:JSON.stringify(info)
+        })
+            .then(res => res.json())
+            .then(d => {
+                if (d.insertedId) {
+                    toast.success('House booked successfully !!')
+                    window.my_modal_5.close()
+                    refetch()
+                }
+                if(d?.error){
+                    toast.error(d.message)
+                    window.my_modal_5.close()
+                    refetch()
+                }
+            })
+            .catch(e => {
+                toast.error(e.message)
+                console.log(e)
+                window.my_modal_5.close()
+            })
+    
+
+    }
     return (
         <div className=' p-3 md:p-0'>
             <div className='my-3 bg-white p-5 rounded-lg shadow-md '>
@@ -174,7 +212,7 @@ const { data:data2, refetch:loadHouse } = useQuery({
                         <h4>{size}ft</h4></div>
                 </div>
                 <div className='md:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
-                    {houses && houses.map((item, i) => <HouseCard key={i} {...item} ></HouseCard>)}
+                    {houses && houses.map((item, i) => <HouseCard key={i} {...item} setActiveData={setActiveData} ></HouseCard>)}
                     <div>
 
 
@@ -183,15 +221,33 @@ const { data:data2, refetch:loadHouse } = useQuery({
                 </div>
             </div>
             <div className='w-full bg-white my-2 rounded-lg p-5 shadow-md flex justify-center items-center'>
-                
-            <div className="btn-group">
+
+                <div className="btn-group">
                     {
-                        totalPages?.map(i => <button onClick={() => setActivePage(i)} key={i} className={`btn border-none text-white bg-[#95b3e0] btn-md ${activePage == i ? 'btn-active text-white' : ''}`}>{i+1}</button>)
+                        totalPages?.map(i => <button onClick={() => setActivePage(i)} key={i} className={`btn border-none text-white bg-[#95b3e0] btn-md ${activePage == i ? 'btn-active text-white' : ''}`}>{i + 1}</button>)
                     }
 
                 </div>
 
             </div>
+
+
+
+            <dialog id="my_modal_5" className="modal ">
+                <div method="dialog" className="modal-box">
+
+                    <form onSubmit={handleBook}>
+                        <input name='name' value={user.name} required type="text" placeholder="Name " className="input input-bordered input-primary w-full my-2 bg-gray-100 border-0 " />
+                        <input name='email' value={user.email} required type="email" placeholder="Email " className="input input-bordered input-primary w-full bg-gray-100 border-0 " />
+                        <input name='number' required type="text" placeholder="number  " className="input input-bordered input-primary my-2 w-full bg-gray-100 border-0 " />
+
+                        <button className='btn btn-primary w-full my-3'>Book Now</button>
+                    </form>
+                    <button className='absolute top-0 right-0 rounded-full bg-red-600 text-white m-3' onClick={handleClose}> <AiFillCloseCircle className='text-3xl font-bold'></AiFillCloseCircle> </button>
+                </div>
+
+
+            </dialog>
         </div>
     );
 };
