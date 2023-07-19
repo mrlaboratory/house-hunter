@@ -6,29 +6,29 @@ const MyBookings = () => {
     const [bookedHouse, refetch] = useBookedData()
     console.log(bookedHouse);
     const handleRemoveBooking = id => {
-        fetch(`${import.meta.env.VITE_SERVER}/removebooking/${id}`,{
-            method:'DELETE'
+        fetch(`${import.meta.env.VITE_SERVER}/removebooking/${id}`, {
+            method: 'DELETE'
         })
-        .then(res => res.json())
-        .then(d => {
-            if(d?.deletedCount){
-                toast.success('House deleted from booking list !!')
-                
-            }
-            console.log(d);
-            refetch()
-        })
-        .then(e => {
-            toast.error(e.message)
-            console.log(e)
-            refetch()
-            
+            .then(res => res.json())
+            .then(d => {
+                if (d?.deletedCount) {
+                    toast.success('House deleted from booking list !!')
 
-        })
+                }
+                console.log(d);
+                refetch()
+            })
+            .then(e => {
+                toast.error(e.message)
+                console.log(e)
+                refetch()
+
+
+            })
 
     }
-    
-    
+
+
     return (
         <div>
             <div className='md:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
@@ -48,6 +48,11 @@ const MyBookings = () => {
 
 
                     </div>)
+                }
+
+                {
+                    bookedHouse?.length === 0 && <h2 className='text-2xl font-bold'>There is no booking house </h2> 
+
                 }
 
 
