@@ -60,12 +60,12 @@ const MyHouses = () => {
         const name = form.name.value
         const address = form.address.value
         const city = form.city.value
-        const bedrooms = form.bedrooms.value
-        const bathrooms = form.bathrooms.value
-        const romeSize = form.romesize.value
+        const bedrooms = parseInt(form.bedrooms.value)
+        const bathrooms = parseInt(form.bathrooms.value)
+        const romeSize = parseInt(form.romesize.value)
         const pictureUrl = form.picture.value
         const availabilityDate = form.availabilitydate.value
-        const rent = form.rent.value
+        const rent = parseInt(form.rent.value)
         const number = form.number.value
         const description = form.description.value
         const info = { name, address, city, bedrooms, bathrooms, romeSize, pictureUrl, availabilityDate, rent, number, description }
