@@ -20,7 +20,7 @@ const AllHouses = () => {
         }
     })
     const [activePage, setActivePage] = useState(0)
-    const limit = 2
+    const limit = 10
     const pages = Math.ceil(totalHouses / limit)
     let totalPages = pages ? [...Array(pages).keys()] : []
     console.log(totalHouses);
@@ -118,7 +118,7 @@ const AllHouses = () => {
             .then(res => res.json())
             .then(d => {
                 if (d.insertedId) {
-                    toast.success('House booked successfully !!')
+                    toast.success('House booked successfully !! ')
                     window.my_modal_5.close()
                     refetch()
                 }

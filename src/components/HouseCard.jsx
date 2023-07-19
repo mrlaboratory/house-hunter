@@ -10,7 +10,7 @@ const HouseCard = ({ name, pictureUrl,email, rent, _id, city, bedrooms, bathroom
         if (user) {
             if (user?.role === 'House Renter') {
                 window.my_modal_5.showModal()
-                const info = { bookedBy: user.email, name,ownerEmail:email, houseId: _id, rent, bedrooms }
+                const info = { bookedBy: user.email, name,ownerEmail:email, houseId: _id, rent, bedrooms,pictureUrl, city }
                 setActiveData(info);
             } else {
                 toast.error('Only House Renter can book the house !!')
